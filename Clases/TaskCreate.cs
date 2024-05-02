@@ -2,8 +2,8 @@
 {
     public class TaskCreate
     {
-        public DateTime taskType {  get; set; }
-        public int taskStarus { get; set; }
+        public string taskType {  get; set; }
+        public string taskStatus { get; set; }
 
     }
 }

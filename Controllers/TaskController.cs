@@ -51,6 +51,25 @@ namespace MiPrimerProyecto.Controllers
             return tarea;
 
         }
+
+        [HttpPost]
+        public void createTask(string task, string taskInitDate, string taskDueDate, string userId, string taskType, string taskStatus)
+        {
+            SqlConnection conn = new (DBConnection.conn);
+            conn.Open();
+            string consulta = "INSERT INTO Tasks (Task, init_date, due_date, User_id, Status_id, Type_Task_id) " +
+                "VALUES (@task, @init_date, @due_date, @user_id, @status_id, @type_task_id)";
+            SqlCommand cmd = new (consulta, conn);
+            cmd.Parameters.AddWithValue("@task", task);
+            cmd.Parameters.AddWithValue("@init_date", taskInitDate);
+            cmd.Parameters.AddWithValue("@due_date", taskDueDate);
+            cmd.Parameters.AddWithValue("@user_id", userId);
+            cmd.Parameters.AddWithValue("@status_id", taskStatus);
+            cmd.Parameters.AddWithValue("@type_task_id", taskType);
+            cmd.ExecuteNonQuery();
+            cmd.Dispose (); 
+            conn.Close();
+        }
         
         
     }
