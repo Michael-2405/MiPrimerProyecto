@@ -53,24 +53,103 @@ namespace MiPrimerProyecto.Controllers
         }
 
         [HttpPost]
-        public void createTask(string task, string taskInitDate, string taskDueDate, string userId, string taskType, string taskStatus)
+        public void createTask(TaskCreate newTask)
         {
             SqlConnection conn = new (DBConnection.conn);
             conn.Open();
             string consulta = "INSERT INTO Tasks (Task, init_date, due_date, User_id, Status_id, Type_Task_id) " +
-                "VALUES (@task, @init_date, @due_date, @user_id, @status_id, @type_task_id)";
+                "VALUES (@task, @initDate, @dueDate, @userId, @statusId, @typeTaskid)";
             SqlCommand cmd = new (consulta, conn);
-            cmd.Parameters.AddWithValue("@task", task);
-            cmd.Parameters.AddWithValue("@init_date", taskInitDate);
-            cmd.Parameters.AddWithValue("@due_date", taskDueDate);
-            cmd.Parameters.AddWithValue("@user_id", userId);
-            cmd.Parameters.AddWithValue("@status_id", taskStatus);
-            cmd.Parameters.AddWithValue("@type_task_id", taskType);
+            cmd.Parameters.AddWithValue("@task", newTask.task);
+            cmd.Parameters.AddWithValue("@initDate", newTask.taskInitDate);
+            cmd.Parameters.AddWithValue("@dueDate", newTask.taskDueDate);
+            cmd.Parameters.AddWithValue("@userId", newTask.userId);
+            cmd.Parameters.AddWithValue("@statusId", newTask.taskStatus);
+            cmd.Parameters.AddWithValue("@typeTaskid", newTask.taskType);
             cmd.ExecuteNonQuery();
+
             cmd.Dispose (); 
             conn.Close();
         }
-        
-        
+
+        [HttpPut]
+        [Route("update/task")]
+        public void updateTask(string taskId, string task) 
+        {
+            SqlConnection conn = new(DBConnection.conn);
+            conn.Open();
+            string consulta = "UPDATE Tasks SET Task = @task WHERE Id = @taskId";
+            SqlCommand cmd = new(consulta, conn);
+            cmd.Parameters.AddWithValue("@task", task);
+            cmd.Parameters.AddWithValue("@taskId", taskId);
+            cmd.ExecuteNonQuery ();
+
+            cmd.Dispose();
+            conn.Close();
+        }
+
+        [HttpPut]
+        [Route("update/dueDate")]
+        public void updateDueDate(string taskId, string taskDueDate)
+        {
+            SqlConnection conn = new(DBConnection.conn);
+            conn.Open();
+            string consulta = "UPDATE Tasks SET due_date = @taskDueDate WHERE Id = @taskId";
+            SqlCommand cmd = new(consulta, conn);
+            cmd.Parameters.AddWithValue("@taskDueDate", taskDueDate);
+            cmd.Parameters.AddWithValue("@taskId", taskId);
+            cmd.ExecuteNonQuery();
+
+            cmd.Dispose();
+            conn.Close();
+        }
+        [HttpPut]
+        [Route("update/taskStatus")]
+        public void updateTaskStatus(string taskId, string taskStatus)
+        {
+            SqlConnection conn = new(DBConnection.conn);
+            conn.Open();
+            string consulta = "UPDATE Tasks SET Status_id = @taskStatus WHERE Id = @taskId";
+            SqlCommand cmd = new(consulta, conn);
+            cmd.Parameters.AddWithValue("@taskStatus", taskStatus);
+            cmd.Parameters.AddWithValue("@taskId", taskId);
+            cmd.ExecuteNonQuery();
+
+            cmd.Dispose();
+            conn.Close();
+        }
+
+        [HttpPut]
+        [Route("update/taskType")]
+        public void updateTask2(string taskId, string taskType)
+        {
+            SqlConnection conn = new(DBConnection.conn);
+            conn.Open();
+            string consulta = "UPDATE Tasks SET Type_Task_id = @taskType WHERE Id = @taskId";
+            SqlCommand cmd = new(consulta, conn);
+            cmd.Parameters.AddWithValue("@taskType", taskType);
+            cmd.Parameters.AddWithValue("@taskId", taskId);
+            cmd.ExecuteNonQuery();
+
+            cmd.Dispose();
+            conn.Close();
+        }
+
+        [HttpDelete]
+        public void deleteTask(string taskId) 
+        {
+            SqlConnection conn = new(DBConnection.conn);
+            conn.Open();
+            string consulta = "DELETE FROM Tasks WHERE Id = @taskId;";
+            SqlCommand cmd = new(consulta, conn);
+            cmd.Parameters.AddWithValue("@taskId", taskId);
+            cmd.ExecuteNonQuery();
+
+            cmd.Dispose();
+            conn.Close();
+        }
+
+
+
     }
 }
