@@ -1,11 +1,29 @@
+:root{
+  --primary: #61326E;
+  --global: #0F0C1B;
+  --text-color: #EAE8F5;
+  --accent: #B35CB5;
+  --green-check: #4FAF04;
+  --blue-check: #0486AF;
+  --red-check: #BF1E1E;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-/* selector{
-    propiedad: valor;
-} */
 
-/* css */
-/* cascade style sheets */
+/*
+CSS: cascade style sheets
+
+Sintaxis basica de CSS:
+selector{
+    propiedad: valor;
+}
+
+:root es un selector que selecciona el documento
+HTML y suele utilizarse para declarar variable.
+
+
+*/
